@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RACI Interactive Toolkit (PDF Version)</title>
+  <style>
+    :root {
+      --gold: #c7a34c;
+      --gold-dark: #a88317;
+      --black: #181818;
+      --white: #fff;
+      --alert-red: #c0392b;
+    }
+    @media print {
+      body { background: #fff !important; }
+      .no-print { display: none !important; }
+      .container {
+        box-shadow: none !important;
+        border: 2px solid var(--gold) !important;
+        margin: 0 !important;
+        max-width: 100vw !important;
+        padding: 0.5cm 1cm 1cm 1cm !important;
+        border-radius: 0 !important;
+      }
+      #a-alert, #r-alert, #emptyrole-alert { display: none !important; }
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6f6f6;
+      color: var(--black);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: var(--white);
+      border: 2.5px solid var(--gold);
+      border-radius: 9px;
+      box-shadow: 0 2px 18px #e9d7ad33;
+      padding: 1.5cm 2cm 2cm 2cm;
+    }
+    .logo-header {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .logo-title {
+      font-size: 2.1rem;
+      font-weight: bold;
+      color: var(--black);
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0 var(--gold);
+    }
+    h1, h2, h3 {
+      color: var(--gold-dark);
+      margin-bottom: 0.45em;
+      page-break-after: avoid;
+    }
+    .guide, .examples {
+      background: #fcf8f3;
+      border-left: 5px solid var(--gold-dark);
+      border-radius: 7px;
+      margin-bottom: 2rem;
+      padding: 1.1rem 1.1rem 0.9rem 1.2rem;
+    }
+    .guide ul, .guide ol { margin: 0.7em 0 0 1.5em; }
+    .legend span {
+      margin-right: 1.3em;
+      padding: 0.13em 0.6em;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 1em;
+      border: 1.3px solid var(--gold);
+      background: linear-gradient(90deg, #fffbe7 60%, #e4c874 100%);
+    }
+    .cell-R { background: #fffbe7 !important; color: var(--gold-dark) !important; border: 2px solid var(--gold); }
+    .cell-A { background: #f5ede0 !important; color: var(--gold-dark) !important; border: 2px solid var(--gold-dark);}
+    .cell-C { background: #fcf5dd !important; color: #a88317 !important; border: 2px solid var(--gold); }
+    .cell-I { background: #eaeaea !important; color: #888 !important; border: 2px solid #ccc; }
+    .controls button {
+      margin: 0 1em 1em 0;
+      padding: 0.55em 1.1em;
+      border-radius: 5px;
+      background: linear-gradient(92deg, var(--gold) 70%, #fff9e5 100%);
+      border: 1.5px solid var(--gold-dark);
+      font-weight: bold;
+      color: var(--black);
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .remove-btn {
+      color: #c00;
+      background: transparent;
+      border: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-left: 0.3em;
+      cursor: pointer;
+    }
+    .remove-btn:disabled {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      margin: 1rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 7px #eee;
+      font-size: 1em;
+    }
+    th, td {
+      border: 1.2px solid #e8e2d3;
+      padding: 7px 8px;
+      text-align: center;
+      font-size: 1em;
+    }
+    th input, td input {
+      width: 90%;
+      box-sizing: border-box;
+      padding: 2px 4px;
+      border-radius: 3px;
+      border: 1.1px solid #e2c369;
+      font-size: 1em;
+      background: #faf6ef;
+      color: var(--black);
+      font-weight: bold;
+      text-align: center;
+    }
+    th input, td input { font-weight: bold; }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 0.3em;
+      color: var(--gold-dark);
+      font-size: 1.07em;
+    }
+    #a-alert, #r-alert, #emptyrole-alert {
+      background: #fff5f5;
+      color: var(--alert-red);
+      border: 2px solid var(--alert-red);
+      padding: 0.9em 1.2em;
+      border-radius: 6px;
+      font-size: 1.1em;
+      margin-bottom: 1em;
+      display: none;
+    }
+    small {
+      color: #a88317;
+      margin-top: 2em;
+      display: block;
+      text-align: center;
+      font-size: 1em;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 1rem; }
+      .logo-header { flex-direction: column; align-items: flex-start; }
+      .logo-title { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-header">
+      <div class="logo-title">
+        RACI Interactive Toolkit<br>
+        <span style="font-size:1.1rem;font-weight:normal;color:#232323;">Empowering Clarity, Enabling Action</span>
+      </div>
+    </div>
+    <div class="guide">
+      <h2>What is RACI?</h2>
+      <ul>
+        <li><strong>R</strong>: Responsible – Who does the work?</li>
+        <li><strong>A</strong>: Accountable – Who is ultimately answerable?</li>
+        <li><strong>C</strong>: Consulted – Who gives input?</li>
+        <li><strong>I</strong>: Informed – Who needs to be kept in the loop?</li>
+      </ul>
+      <h3>How to Use</h3>
+      <ol>
+        <li>List all tasks/process steps down the left.</li>
+        <li>List all roles or people across the top.</li>
+        <li>Assign R, A, C, or I for each activity and role (multiple entries allowed, e.g. R/A).</li>
+        <li>Each task must have only one “A” (Accountable) (pop-up if violated) and at least one “R” (Responsible) (alert if not).</li>
+        <li>Every cell must have a role (R/A/C/I); alert if any are empty.</li>
+        <li>Print or save as PDF when ready.</li>
+      </ol>
+      <div class="legend" style="margin-top:1em;">
+        <span class="cell-R">R</span> Responsible
+        <span class="cell-A">A</span> Accountable
+        <span class="cell-C">C</span> Consulted
+        <span class="cell-I">I</span> Informed
+      </div>
+    </div>
+    <div class="examples">
+      <h2>Industry Examples</h2>
+      <details open>
+        <summary>Marketing</summary>
+        <table>
+          <tr><th>Task</th><th>Marketing Manager</th><th>Content Creator</th><th>Designer</th><th>Sales Lead</th><th>HR</th></tr>
+          <tr><td>Develop campaign brief</td><td>A</td><td>R</td><td>C</td><td>C</td><td>I</td></tr>
+          <tr><td>Design campaign assets</td><td>C</td><td>C</td><td>R, A</td><td>I</td><td>I</td></tr>
+          <tr><td>Launch campaign</td><td>R, A</td><td>I</td><td>I</td><td>C</td><td>I</td></tr>
+          <tr><td>Measure campaign results</td><td>R, A</td><td>I</td><td>I</td><td>C</td><td>I</td></tr>
+        </table>
+      </details>
+      <details>
+        <summary>Restaurant &amp; Café</summary>
+        <table>
+          <tr><th>Task</th><th>Owner</th><th>Chef</th><th>Wait Staff</th><th>HR</th><th>Accountant</th></tr>
+          <tr><td>Develop menu</td><td>A</td><td>R</td><td>C</td><td>I</td><td>I</td></tr>
+          <tr><td>Hire staff</td><td>C</td><td>C</td><td>I</td><td>A, R</td><td>I</td></tr>
+          <tr><td>Train staff</td><td>I</td><td>R</td><td>A</td><td>C</td><td>I</td></tr>
+          <tr><td>Process payroll</td><td>I</td><td>I</td><td>I</td><td>C</td><td>A, R</td></tr>
+        </table>
+      </details>
+      <details>
+        <summary>Pharmaceutical</summary>
+        <table>
+          <tr><th>Task</th><th>R&amp;D Lead</th><th>QA Manager</th><th>Regulatory</th><th>HR</th><th>Production</th></tr>
+          <tr><td>Develop new drug</td><td>R, A</td><td>C</td><td>I</td><td>I</td><td>I</td></tr>
+          <tr><td>File regulatory docs</td><td>I</td><td>C</td><td>A, R</td><td>I</td><td>I</td></tr>
+          <tr><td>Recruit lab staff</td><td>I</td><td>C</td><td>I</td><td>A, R</td><td>I</td></tr>
+          <tr><td>Conduct training</td><td>C</td><td>R</td><td>I</td><td>A</td><td>I</td></tr>
+        </table>
+      </details>
+      <details>
+        <summary>Oil &amp; Gas</summary>
+        <table>
+          <tr><th>Task</th><th>Project Mgr</th><th>Eng. Lead</th><th>Safety Officer</th><th>HR</th><th>Finance</th></tr>
+          <tr><td>Drill site planning</td><td>A</td><td>R</td><td>C</td><td>I</td><td>I</td></tr>
+          <tr><td>Safety audit</td><td>I</td><td>C</td><td>R, A</td><td>I</td><td>I</td></tr>
+          <tr><td>Hire site staff</td><td>C</td><td>C</td><td>I</td><td>A, R</td><td>I</td></tr>
+          <tr><td>Budget approval</td><td>R</td><td>I</td><td>I</td><td>I</td><td>A</td></tr>
+        </table>
+      </details>
+    </div>
+    <h2>Your RACI Matrix (Fill and Print)</h2>
+    <div id="a-alert"></div>
+    <div id="r-alert"></div>
+    <div id="emptyrole-alert"></div>
+    <div class="controls no-print">
+      <button onclick="addRole()">Add Role</button>
+      <button onclick="addTask()">Add Task</button>
+      <button onclick="clearAll()">Clear Table</button>
+    </div>
+    <div id="raci-matrix"></div>
+    <small>
+      © 2025 Pentapyramid Human Quality | <b>Building Your Capacity</b>
+      <br>
+      <span class="no-print">To save as PDF: <b>File → Print → Save as PDF</b></span>
+    </small>
+  </div>
+  <script>
+    let roles = ["Role 1", "Role 2", "Role 3"];
+    let tasks = ["Example Task 1", "Example Task 2"];
+    let matrix = [
+      ["", "", ""],
+      ["", "", ""]
+    ];
+
+    function renderMatrix() {
+      let html = '<table><thead><tr><th>Task/Process Step</th>';
+      roles.forEach((role, idx) => {
+        html += `<th>
+          <input value="${role.replace(/"/g, '&quot;')}" oninput="editRole(${idx}, this.value)" tabindex="1">
+          <button class="remove-btn no-print" onclick="removeRole(${idx})" title="Remove Role" ${roles.length<=1?'disabled':''}>&times;</button>
+        </th>`;
+      });
+      html += '</tr></thead><tbody>';
+      tasks.forEach((task, tIdx) => {
+        html += `<tr><td>
+          <input value="${task.replace(/"/g, '&quot;')}" oninput="editTask(${tIdx}, this.value)" tabindex="1">
+          <button class="remove-btn no-print" onclick="removeTask(${tIdx})" title="Remove Task" ${tasks.length<=1?'disabled':''}>&times;</button>
+        </td>`;
+        roles.forEach((role, rIdx) => {
+          const val = matrix[tIdx][rIdx] || "";
+          let cellClass = val.includes("R") ? "cell cell-R" :
+                          val.includes("A") ? "cell cell-A" :
+                          val.includes("C") ? "cell cell-C" :
+                          val.includes("I") ? "cell cell-I" : "cell";
+          html += `<td><input 
+            class="${cellClass}" 
+            maxlength="8" value="${val}" 
+            oninput="editCell(${tIdx},${rIdx},this.value)" 
+            placeholder="R/A/C/I" tabindex="1"></td>`;
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById("raci-matrix").innerHTML = html;
+      checkAllRules();
+    }
+
+    function addRole() {
+      roles.push("Role " + (roles.length + 1));
+      matrix.forEach(row => row.push(""));
+      renderMatrix();
+    }
+    function addTask() {
+      tasks.push("Task " + (tasks.length + 1));
+      matrix.push(Array(roles.length).fill(""));
+      renderMatrix();
+    }
+    function removeRole(idx) {
+      if (roles.length <= 1) return;
+      roles.splice(idx, 1);
+      matrix.forEach(row => row.splice(idx, 1));
+      renderMatrix();
+    }
+    function removeTask(idx) {
+      if (tasks.length <= 1) return;
+      tasks.splice(idx, 1);
+      matrix.splice(idx, 1);
+      renderMatrix();
+    }
+    function editRole(idx, value) {
+      roles[idx] = value;
+    }
+    function editTask(idx, value) {
+      tasks[idx] = value;
+    }
+    function editCell(tIdx, rIdx, value) {
+      value = value.toUpperCase().replace(/[^RACI\/, ]/g, "");
+      // Always allow multiple entries (e.g. R/A or R, A)
+      // But only allow one A per task (across all cells)
+      // If this cell is being set to include A and another cell already has A (except this cell), pop up
+      let normalizedValue = value.replace(/[^RACI]/g, "");
+      let countA = matrix[tIdx].reduce((acc, cell, idx) => {
+        if (idx !== rIdx && cell.toUpperCase().includes("A")) return acc + 1;
+        return acc;
+      }, 0);
+      // If user adds an "A" and another cell already has "A", show popup and revert
+      if (normalizedValue.includes("A") && countA >= 1) {
+        let prev = matrix[tIdx][rIdx] || "";
+        alert('Only one "A" (Accountable) is allowed per task.');
+        setTimeout(() => {
+          renderMatrix();
+          let cellInputs = document.querySelectorAll('#raci-matrix tbody tr')[tIdx].querySelectorAll('td input');
+          if (cellInputs[rIdx]) cellInputs[rIdx].focus();
+        }, 10);
+        return;
+      }
+      matrix[tIdx][rIdx] = value;
+      renderMatrix();
+    }
+    function clearAll() {
+      roles = ["Role 1", "Role 2", "Role 3"];
+      tasks = ["Example Task 1", "Example Task 2"];
+      matrix = [
+        ["", "", ""],
+        ["", "", ""]
+      ];
+      renderMatrix();
+    }
+
+    function checkAllRules() {
+      checkAAccountable();
+      checkAtLeastOneR();
+      checkEveryCellHasRole();
+    }
+
+    // Check: Only one A per task (visual alert, popup is handled on editCell)
+    function checkAAccountable() {
+      let errorTasks = [];
+      matrix.forEach((row, tIdx) => {
+        let aCount = row.reduce((acc, cell) => acc + (cell.toUpperCase().includes("A") ? 1 : 0), 0);
+        if (aCount > 1) {
+          errorTasks.push(tasks[tIdx] || `Task ${tIdx+1}`);
+        }
+      });
+      let alertDiv = document.getElementById("a-alert");
+      if (errorTasks.length > 0) {
+        alertDiv.innerHTML = '<b>Alert:</b> Only one "A" (Accountable) is allowed per task.<br>' +
+          'Please review: <ul>' +
+          errorTasks.map(t => `<li style="font-weight:bold">${t}</li>`).join('') +
+          '</ul>';
+        alertDiv.style.display = "block";
+      } else {
+        alertDiv.innerHTML = "";
+        alertDiv.style.display = "none";
+      }
+    }
+
+    // Check: At least one R per task
+    function checkAtLeastOneR() {
+      let errorTasks = [];
+      matrix.forEach((row, tIdx) => {
+        let rCount = row.reduce((acc, cell) => acc + (cell.toUpperCase().includes("R") ? 1 : 0), 0);
+        if (rCount < 1) {
+          errorTasks.push(tasks[tIdx] || `Task ${tIdx+1}`);
+        }
+      });
+      let alertDiv = document.getElementById("r-alert");
+      if (errorTasks.length > 0) {
+        alertDiv.innerHTML = '<b>Alert:</b> Each task must have at least one "R" (Responsible).<br>' +
+          'Please review: <ul>' +
+          errorTasks.map(t => `<li style="font-weight:bold">${t}</li>`).join('') +
+          '</ul>';
+        alertDiv.style.display = "block";
+      } else {
+        alertDiv.innerHTML = "";
+        alertDiv.style.display = "none";
+      }
+    }
+
+    // Check: Every cell has a valid role (R/A/C/I allowed, any combo)
+    function checkEveryCellHasRole() {
+      let missing = [];
+      matrix.forEach((row, tIdx) => {
+        row.forEach((cell, rIdx) => {
+          let val = cell.trim().toUpperCase();
+          // Accept combos, but must have at least one of R/A/C/I
+          if (!val.match(/[RACI]/)) {
+            missing.push(`${roles[rIdx] || `Role ${rIdx+1}`} in ${tasks[tIdx] || `Task ${tIdx+1}`}`);
+          }
+        });
+      });
+      let alertDiv = document.getElementById("emptyrole-alert");
+      if (missing.length > 0) {
+        alertDiv.innerHTML = `<b>Alert:</b> Every team member must have a role (R/A/C/I) for every task.<br>
+        Please review: <ul>` +
+          missing.map(t => `<li style="font-weight:bold">${t}</li>`).join('') +
+          '</ul>';
+        alertDiv.style.display = "block";
+      } else {
+        alertDiv.innerHTML = "";
+        alertDiv.style.display = "none";
+      }
+    }
+
+    renderMatrix();
+  </script>
+</body>
+</html>
